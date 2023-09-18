@@ -23,7 +23,7 @@ if __name__ == '__main__':
     sumo_cfg = path_convert("./TSCScenario/J1/env/J1.sumocfg")
     params = {
         'tls_id':'J4',
-        'num_seconds': 2600,
+        'num_seconds': 1600,
         'sumo_cfg':sumo_cfg,
         'use_gui':True,
         'log_file':path_convert('./log/'),
@@ -44,6 +44,8 @@ if __name__ == '__main__':
 
     while not dones:
         action, _state = model.predict(obs, deterministic=True)
+        print('action',action)
+        print('obs',obs)
         obs, rewards, dones, infos = env.step(action)
         total_reward += rewards
         
