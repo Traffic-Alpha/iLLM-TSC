@@ -45,8 +45,46 @@ class TSCEnvWrapper(gym.Wrapper):
         self.tls_id = tls_id # 单路口的 id
         self.states = deque([self._get_initial_state()] * max_states, maxlen=max_states)
         self.movement_ids = None
+        self.phase_num = None # phase 数量
+        self.llm_static_information = None # Static information, (1). Intersection Geometry; (2). Signal Phases Structure
         self.phase2movements = None
+        
+        #Dynamic Information
+        self.state = None # 当前的 state
+        self.last_state = None # 上一时刻的 state
         self.occupancy = OccupancyList()
+    
+    def transform_occ_data(self, occ:List[float]) -> Dict[str, float]:
+        """将 avg_occupancy 与每一个 movement id 对应起来
+
+        Args:
+            occ (List[float]): _description_
+
+        Returns:
+            Dict[str, float]: _description_
+        """
+        output_dict = {}
+        for movement_id, value in zip(self.movement_ids, occ):
+            if 'r' in movement_id:
+                continue
+            output_dict[movement_id] = f"{value*100}%" # 转换为占有率
+        return output_dict
+    
+    # ###########################
+    # Custom Tools for TSC Agent
+    # ###########################
+    
+    def get_available_actions(self) -> List[int]:
+        """获得控制信号灯可以做的动作
+        """
+        tls_available_actions = list(range(self.phase_num))
+        return tls_available_actions
+    
+    def get_current_occupancy(self):
+        return self.state
+    
+    def get_previous_occupancy(self):
+        return self.last_state
     
     def _get_initial_state(self) -> List[int]:
         # 返回初始状态，这里假设所有状态都为 0

@@ -69,14 +69,7 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model_path = path_convert('./models/last_rl_model.zip')
     model = PPO.load(model_path, env=env, device=device)
-    tsc_scenario = TSCEnvironment(
-        sumo_cfg=sumo_cfg, 
-        num_seconds=1200,
-        tls_id='J4', 
-        tls_action_type='choose_next_phase',
-        use_gui=True
-    )
-    tsc_wrapper = TSCEnvWrapper(tsc_scenario)
+
     tools = [
         GetAvailableActions(env=env),
         GetCurrentOccupancy(env=env), # 查看当前时刻的拥堵情况
@@ -93,11 +86,10 @@ if __name__ == '__main__':
         action, _state = model.predict(obs, deterministic=True)
 
         print('action',action)
-        #tsc_agent.agent_run(sim_step=sim_step)
+        tsc_agent.agent_run(sim_step=sim_step)
         obs, rewards, dones, infos = env.step(action)
         print('obs',obs)
         action = np.random.randint(4)
-        states, dones, infos = tsc_wrapper.step(action=action)
-        print('obs',states)
+
     env.close()
     print(f'累积奖励为, {total_reward}.')
