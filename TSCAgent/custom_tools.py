@@ -20,14 +20,15 @@ def prompts(name, description):
 
 
 class GetAvailableActions:
-    def __init__(self, env: Any) -> None:
+    def __init__(self, env: Any, state: float=[], action: int=[]) -> None:
         self.env = env
-
+        self.state=state
+        self.action=action
     @prompts(name='Get Available Actions',
              description="""Useful before you make decisions, this tool let you know what are your available actions in this situation step.""")
     def inference(self) -> str:
         outputPrefix = 'You can ONLY use one of the following actions: \n'
-        available_actions = self.env.get_available_actions()
+        available_actions = self.action
         for action in available_actions:
             outputPrefix += f'- Phase {action} to be green: Make Phase {action} green light and the other phases red lights.\n'
             
@@ -38,28 +39,16 @@ class GetAvailableActions:
 
 
 class GetCurrentOccupancy:
-    def __init__(self, env: Any) -> None:
+    def __init__(self, env: Any, state: float=[], action: int=[]) -> None:
         self.env = env
-
+        self.state=state
+        self.action=action
+        self.sim_step=0
     @prompts(name='Get Current Occupancy',
              description="""Useful when you want to get the congestion situation of each movement at the current moment. The input to this tool should be a string.""")
     def inference(self, *arg, **kwargs) -> str:
-        current_occupancy = self.env.get_current_occupancy()
-        current_occupancy_string = f"""At the current moment {self.env.tsc_env.sim_step}, the congestion situation of each movement is:\n{dict_to_str(current_occupancy)}
+        current_occupancy =self.state
+        current_occupancy_string = f"""At the current moment {self.sim_step}, the congestion situation of each movement is:\n{dict_to_str(current_occupancy)}
         \n,where `key` is the `movement id`, and `value` represents the proportion of the queue length on this `movement` to the total length.
         """
         return current_occupancy_string
-
-
-class PredictQueueLength:
-    def __init__(self, env: Any) -> None:
-        self.env = env
-
-    @prompts(name='Predict Queue Length',
-            description="""Useful when you want to predict the queue length for the action you want to execute. The input is a str, representing the index of the phase that you decide to change to the green light. For example, the index for Phase 1 is 1.""")
-    def inference(self, phase_id: int) -> str:
-        predict_queue_length = self.env.predict_future_scene(phase_id)
-        predict_state_str = f'If the Phase {phase_id} becomes green light, the queue length of each phase may become {dict_to_str(predict_queue_length)}.\n'
-        predict_state_str += """You need to also check other available actions you mentioned above until all of them have beem checked."""
-        return predict_state_str
-    

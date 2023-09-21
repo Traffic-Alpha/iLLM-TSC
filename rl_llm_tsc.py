@@ -70,18 +70,18 @@ if __name__ == '__main__':
     model_path = path_convert('./models/last_rl_model.zip')
     model = PPO.load(model_path, env=env, device=device)
 
-    tools = [
-        GetAvailableActions(env=env),
-        GetCurrentOccupancy(env=env), # 查看当前时刻的拥堵情况
-    ]
-    tsc_agent = TSCAgent(llm=chat, tools=tools, verbose=True)
-    # 使用模型进行测试
+
     
+    # 使用模型进行测试
     dones = False # 默认是 False
     total_reward = 0
     sim_step = 0
-
     obs = env.reset()
+    tools = [
+        GetAvailableActions(state=obs, env=env),
+        GetCurrentOccupancy(state=obs, env=env), # 查看当前时刻的拥堵情况
+    ]
+    tsc_agent = TSCAgent(llm=chat,tools=tools, verbose=True)
     while not dones:
         action, _state = model.predict(obs, deterministic=True)
 
@@ -89,7 +89,6 @@ if __name__ == '__main__':
         tsc_agent.agent_run(sim_step=sim_step)
         obs, rewards, dones, infos = env.step(action)
         print('obs',obs)
-        action = np.random.randint(4)
-
+        sim_step+=1
     env.close()
     print(f'累积奖励为, {total_reward}.')

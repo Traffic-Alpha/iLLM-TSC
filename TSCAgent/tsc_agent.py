@@ -18,10 +18,11 @@ class TSCAgent:
     def __init__(self, 
                  llm:ChatOpenAI, 
                  tools:List[Tool],
-                 verbose:bool=True
-                ) -> None:
+                 verbose:bool=True, action:int=0, state:float=[] ) -> None:
         self.llm = llm # ChatGPT Model
         self.tools = [] # agent 可以使用的 tools
+        self.state= state
+        self.action=action
         for ins in tools:
             func = getattr(ins, 'inference')
             self.tools.append(
@@ -46,7 +47,7 @@ class TSCAgent:
             early_stopping_method="generate",
         )
     
-    def agent_run(self, sim_step:float):
+    def agent_run(self, sim_step:float ):
         """_summary_
 
         Args:
@@ -61,5 +62,6 @@ class TSCAgent:
         r = self.agent.run(
             f'Please summary the current state of the intersections, and tell me which movment id is the most congestion.'
         )
+        
         print(r)
         print('-'*10)
