@@ -1,0 +1,19 @@
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E2---E2_0---E0_0--r" lane=":J1_0_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E2---E2_0--E3_0--s" lane=":J1_1_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E2---E2_1--E3_1--s" lane=":J1_1_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E2---E2_2--E1_2--l" lane=":J1_3_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E1---E1_0--E2_0--r" lane=":J1_4_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E1---E1_1---E0_0--s" lane=":J1_5_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E1---E1_2---E0_1--s" lane=":J1_5_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E1---E1_3--E3_1--l" lane=":J1_7_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E3---E3_0--E1_0--r" lane=":J1_8_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E3---E3_1--E2_0--s" lane=":J1_9_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E3---E3_2--E2_1--s" lane=":J1_9_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1---E3---E3_3---E0_1--l" lane=":J1_11_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1--E0--E0_0--E3_0--r" lane=":J1_12_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1--E0--E0_1--E1_0--s" lane=":J1_13_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1--E0--E0_2--E1_1--s" lane=":J1_13_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1--E0--E0_3--E1_2--s" lane=":J1_13_2" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--J1--E0--E0_4--E2_1--l" lane=":J1_16_0" pos="3"/>
+</additional>
