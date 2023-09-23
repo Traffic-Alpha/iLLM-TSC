@@ -53,13 +53,12 @@ if __name__ == '__main__':
     # #########
     # Init Env
     # #########
-    
     params = {
-        'tls_id':'J4',
-        'num_seconds': 1600,
+        'tls_id':'J1',
+        'num_seconds':2600,
         'sumo_cfg':sumo_cfg,
-        'use_gui':True,
-        'log_file':path_convert('./log/'),
+        'use_gui':False,
+        'log_file':'./log_test/',
     }
     env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(1)])
     env = VecNormalize.load(load_path=path_convert('./models/last_vec_normalize.pkl'), venv=env)
@@ -74,21 +73,20 @@ if __name__ == '__main__':
     
     # 使用模型进行测试
     dones = False # 默认是 False
-    total_reward = 0
     sim_step = 0
     obs = env.reset()
     tools = [
         GetAvailableActions(state=obs, env=env),
         GetCurrentOccupancy(state=obs, env=env), # 查看当前时刻的拥堵情况
     ]
-    tsc_agent = TSCAgent(llm=chat,tools=tools, verbose=True)
+    tsc_agent = TSCAgent(llm=chat,tools=tools, verbose=True, env=env)
     while not dones:
-        action, _state = model.predict(obs, deterministic=True)
 
+        action, _state = model.predict(obs, deterministic=True)
         print('action',action)
-        tsc_agent.agent_run(sim_step=sim_step)
+        #tsc_agent.agent_run(sim_step=sim_step)
         obs, rewards, dones, infos = env.step(action)
-        print('obs',obs)
+        print('obs',obs.shape, obs)
         sim_step+=1
+
     env.close()
-    print(f'累积奖励为, {total_reward}.')
