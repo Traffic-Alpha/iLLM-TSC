@@ -29,7 +29,7 @@ path_convert = get_abs_path(__file__)
 logger.remove()
 
 if __name__ == '__main__':
-    sumo_cfg = path_convert("./TSCScenario/J1/env/J1.sumocfg")
+    sumo_cfg = path_convert("./TSCScenario/SumoNets/train_four_345/env/train_four_345.sumocfg")
     # Init Chat
     config = read_config()
     openai_proxy = config['OPENAI_PROXY']
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         'tls_id':'J1',
         'num_seconds':2600,
         'sumo_cfg':sumo_cfg,
-        'use_gui':False,
+        'use_gui':True,
         'log_file':'./log_test/',
     }
     env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(1)])
@@ -79,7 +79,7 @@ if __name__ == '__main__':
         GetAvailableActions(state=obs, env=env),
         GetCurrentOccupancy(state=obs, env=env), # 查看当前时刻的拥堵情况
     ]
-    tsc_agent = TSCAgent(llm=chat,tools=tools, verbose=True, env=env)
+    tsc_agent = TSCAgent(llm=chat,tools=tools, verbose=True)
     while not dones:
 
         action, _state = model.predict(obs, deterministic=True)

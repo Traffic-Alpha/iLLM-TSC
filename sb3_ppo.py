@@ -47,7 +47,7 @@ if __name__ == '__main__':
         'use_gui':False,
         'log_file':log_path,
     }
-    env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(6)])
+    env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(5)])
     env = VecNormalize(env, norm_obs=False, norm_reward=True)
 
     # #########
@@ -82,7 +82,7 @@ if __name__ == '__main__':
                 tensorboard_log=tensorboard_path, 
                 device=device
             )
-    model.learn(total_timesteps=3e5, tb_log_name='J1', callback=callback_list)
+    model.learn(total_timesteps=1e5, tb_log_name='J1', callback=callback_list)
     
     # #################
     # 保存 model 和 env
