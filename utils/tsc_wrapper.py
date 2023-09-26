@@ -103,10 +103,11 @@ class TSCEnvWrapper(gym.Wrapper):
         """返回整个路口的排队长度的平均值
         """
         total_waiting_time = 0
+        n=1
         for _, veh_info in states['vehicle'].items():
             total_waiting_time += veh_info['waiting_time']
-        print('total_waiting_time',total_waiting_time)
-        return -total_waiting_time
+            n+=1
+        return -(total_waiting_time/n)
     
     def info_wrapper(self, infos, states):
         """在 info 中加入每个 phase 的占有率
@@ -159,13 +160,13 @@ class TSCEnvWrapper(gym.Wrapper):
         #_observations = observations[self.tls_id]
         observation = self._process_obs(state=states)
         process_reward = self.reward_wrapper(states=states)
-        occupancy, can_perform_action = self.state_wrapper(state=states) # 处理每一帧的数据
-        avg_occupancy = self.occupancy.calculate_average()
+        #occupancy, can_perform_action = self.state_wrapper(state=states) # 处理每一帧的数据
         infos = self.info_wrapper(infos, states=states)
-        self.occupancy.add_element(occupancy)
+        #self.occupancy.add_element(occupancy)
         #print('observation',observation)
         #print('infos',infos)
-        return observation, rewards, truncated, dones, infos
+        #print('rewards',process_reward)
+        return observation, process_reward, truncated, dones, infos
     
 
     

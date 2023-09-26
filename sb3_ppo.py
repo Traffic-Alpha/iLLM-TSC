@@ -20,6 +20,7 @@ from benchmark.traffic_light.single_agent.utils.custom_models import CustomModel
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 from stable_baselines3.common.callbacks import CallbackList, CheckpointCallback
+from model import scnn
 
 path_convert = get_abs_path(__file__)
 logger.remove()
@@ -68,21 +69,22 @@ if __name__ == '__main__':
     # #########
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     policy_kwargs = dict(
-        features_extractor_class=CustomModel,
-        features_extractor_kwargs=dict(features_dim=16),
+        #features_extractor_class=CustomModel,
+        features_extractor_class=scnn.SCNN,
+        features_extractor_kwargs=dict(features_dim=32),
     )
     model = PPO(
                 "MlpPolicy", 
                 env, 
-                batch_size=64,
-                n_steps=300, n_epochs=5, # 每次间隔 n_epoch 去评估一次
-                learning_rate=linear_schedule(1e-3),
+                #batch_size=64,
+                n_steps=5000, n_epochs=10, # 每次间隔 n_epoch 去评估一次
+                learning_rate=linear_schedule(3e-4),
                 verbose=True, 
                 policy_kwargs=policy_kwargs, 
                 tensorboard_log=tensorboard_path, 
                 device=device
             )
-    model.learn(total_timesteps=1e5, tb_log_name='J1', callback=callback_list)
+    model.learn(total_timesteps=5e6, tb_log_name='J1', callback=callback_list)
     
     # #################
     # 保存 model 和 env
