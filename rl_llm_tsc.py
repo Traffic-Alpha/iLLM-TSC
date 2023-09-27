@@ -79,14 +79,14 @@ if __name__ == '__main__':
         GetAvailableActions(state=obs, env=env),
         GetCurrentOccupancy(state=obs, env=env), # 查看当前时刻的拥堵情况
     ]
-    tsc_agent = TSCAgent(llm=chat,tools=tools, verbose=True)
+    tsc_agent = TSCAgent(llm=chat, verbose=True)
     while not dones:
 
         action, _state = model.predict(obs, deterministic=True)
-        print('action',action)
-        #tsc_agent.agent_run(sim_step=sim_step)
+        #print('action',action)
+        tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs)
         obs, rewards, dones, infos = env.step(action)
-        print('obs',obs.shape, obs)
+        #print('obs',obs.shape, obs)
         sim_step+=1
 
     env.close()
