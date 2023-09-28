@@ -19,14 +19,25 @@ from langchain.chains import SequentialChain
 from langchain.chains import LLMChain    #导入LLM链。
 
 from TSCAgent.tsc_agent_prompt import SYSTEM_MESSAGE_SUFFIX
+from TSCAgent.tsc_agent_prompt import (
+    SYSTEM_MESSAGE_SUFFIX,
+    SYSTEM_MESSAGE_PREFIX,
+    HUMAN_MESSAGE,
+    FORMAT_INSTRUCTIONS,
+    TRAFFIC_RULES,
+    DECISION_CAUTIONS,
+    HANDLE_PARSING_ERROR
+)
 
 class TSCAgent:
     def __init__(self, 
                  llm:ChatOpenAI, 
                  verbose:bool=True,state:float=[] ) -> None:
+        self.tls_id='J1'
         self.llm = llm # ChatGPT Model
         self.tools = [] # agent 可以使用的 tools
         self.state= state
+        #self.file_callback = create_file_callback(path_convert('../agent.log'))
         self.first_prompt=ChatPromptTemplate.from_template(   
                     'You can ONLY use one of the following actions: \n action:0 action:1 action:2 action:3'
     
@@ -84,7 +95,29 @@ class TSCAgent:
         print('occupancy',occupancy)
         Action=action
         Occupancy=occupancy 
-        r = self.agent.run(Action)
+        r = self.agent.run(
+            f"""
+            You, the 'traffic signal light', are now controlling the traffic signal in the junction with ID `{self.tls_id}`. You have already control for {sim_step*5} seconds.
+            The decision you made LAST time step was `{Action}`. Your explanation was `{Occupancy}`. 
+            Please make decision for the traffic signal light.You have to work with the **Static State** and **Action** of the 'traffic light'. Then you need to analyze whether the current 'Action' is reasonable based on the intersection occupancy rate, and finally output your decision.
+            There are the actions that will occur and their corresponding phases：
+        
+                - Action 0： Phase 0
+                - Action 1： Phase 1
+                - Action 2： Phase 2
+                - Action 3： Phase 3
+
+            Here are your attentions points:
+            {DECISION_CAUTIONS}
+            
+            Let's take a deep breath and think step by step. Once you made a final decision, output it in the following format: \n
+            ```
+            Final Answer: 
+                "decision":{{"Traffic light decision-making judgment, whether the Action is reasonable in the current state"}},
+                "expalanations":{{"your explaination about your decision, described your suggestions to the Crossing Guard"}}
+            ``` \n
+            """,
+        )
         
         print(r)
         print('-'*10)
