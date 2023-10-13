@@ -35,7 +35,8 @@ if __name__ == '__main__':
     openai_proxy = config['OPENAI_PROXY']
     openai_api_key = config['OPENAI_API_KEY']
     chat = ChatOpenAI(
-        model='gpt-3.5-turbo-16k', temperature=0.0,
+        model=config['OPENAI_API_MODEL'], 
+        temperature=0.0,
         openai_api_key=openai_api_key, 
         openai_proxy=openai_proxy
     )
@@ -60,7 +61,7 @@ if __name__ == '__main__':
         'use_gui':True,
         'log_file':'./log_test/',
     }
-    env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(1)])
+    env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(1)])#获取env信息
     env = VecNormalize.load(load_path=path_convert('./models/last_vec_normalize.pkl'), venv=env)
     env.training = False # 测试的时候不要更新
     env.norm_reward = False
@@ -75,18 +76,16 @@ if __name__ == '__main__':
     dones = False # 默认是 False
     sim_step = 0
     obs = env.reset()
-    tools = [
-        GetAvailableActions(state=obs, env=env),
-        GetCurrentOccupancy(state=obs, env=env), # 查看当前时刻的拥堵情况
-    ]
+
     tsc_agent = TSCAgent(llm=chat, verbose=True)
     while not dones:
 
         action, _state = model.predict(obs, deterministic=True)
         #print('action',action)
-        tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs)
         obs, rewards, dones, infos = env.step(action)
-        #print('obs',obs.shape, obs)
+        #print('infos',infos[0]['movement_occ'])
+        if sim_step>20:
+            tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs, infos=infos), 
         sim_step+=1
 
     env.close()
