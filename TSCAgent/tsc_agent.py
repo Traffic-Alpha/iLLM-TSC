@@ -17,6 +17,8 @@ from langchain.prompts import ChatPromptTemplate   #导入聊天提示模板
 from langchain.chains import SimpleSequentialChain
 from langchain.chains import SequentialChain
 from langchain.chains import LLMChain    #导入LLM链。
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
 
 from TSCAgent.tsc_agent_prompt import SYSTEM_MESSAGE_SUFFIX
 from TSCAgent.tsc_agent_prompt import (
@@ -42,17 +44,29 @@ class TSCAgent:
                     'You can ONLY use one of the following actions: \n action:0 action:1 action:2 action:3'
     
                     )
-        self.first_prompt=ChatPromptTemplate.from_template(   
-                    " The action is {Action}, the ocuupance is [1. 0. 0. 0.] \n To check decision safety: "
+        self.second_prompt=ChatPromptTemplate.from_template(   
+                    " The action is {Action}, Your explanation was `{Occupancy}` \n To check decision safety: "
                     )
         self.memory = ConversationTokenBufferMemory(llm=self.llm, max_token_limit=2048)
+        
         self.chain_one = LLMChain(llm=llm, prompt=self.first_prompt)
-        self.chain_two = LLMChain(llm=llm, prompt=self.first_prompt,output_key="sfaty")
-        self.agent =  SequentialChain(chains=[self.chain_one, self.chain_two],
+        
+        self.chain_two = LLMChain(llm=llm, prompt=self.second_prompt,output_key="safety")
+        '''
+        self.assessment =  SequentialChain(chains=[self.chain_one, self.chain_two],
                                       input_variables=["Action"],
                                       #output_variables=["sfaty"],
                                       verbose=True) #构建路由链 还是构建顺序链， 需要构建提示模板
-        
+        '''
+        memory = ConversationBufferMemory()
+        self.assessment = ConversationChain( llm=llm, memory = memory, verbose=True )
+        self.phase2movements={
+                        "Phase 0": ["E0--s","-E1--s"],
+                        "Phase 1": ["E0--l","-E1--l"],
+                        "Phase 2": ["-E3--s","-E2--s"],
+                        "Phase 3": ["-E3--l","-E2--l"],
+                    } 
+        self.movement_ids=["E0--s","-E1--s","-E1--l","E0--l","-E3--s","-E2--s","-E3--l","-E2--l"]                   
     def get_phase(self):
         phases_4=[[1, 1, 0, 0, 0, 0, 0, 0],
        [0, 0, 1, 1, 0, 0, 0, 0],
@@ -75,7 +89,7 @@ class TSCAgent:
 
 
     
-    def agent_run(self, sim_step:float, action:int=0, obs:float=[]):
+    def agent_run(self, sim_step:float, action:int=0, obs:float=[], infos: list={}):
         """_summary_
 
         Args:
@@ -92,13 +106,16 @@ class TSCAgent:
         # )
         # 需要返回上一步每个 movement 的排队长度
         occupancy=self.get_occupancy(obs)
-        print('occupancy',occupancy)
+        #print('occupancy',occupancy)
         Action=action
-        Occupancy=occupancy 
-        r = self.agent.run(
+
+        Occupancy=infos[0]['movement_occ']
+        r = self.assessment.run(
             f"""
-            You, the 'traffic signal light', are now controlling the traffic signal in the junction with ID `{self.tls_id}`. You have already control for {sim_step*5} seconds.
-            The decision you made LAST time step was `{Action}`. Your explanation was `{Occupancy}`. 
+            You, the 'traffic signal light', are now controlling the traffic signal in the junction with ID `{self.tls_id}`.
+            The decision you made LAST time step was `{Action}`. 
+            The mean occupancy of each movement is:`{Occupancy}`. 
+            Phase to Movement: '{self.phase2movements}'
             Please make decision for the traffic signal light.You have to work with the **Static State** and **Action** of the 'traffic light'. Then you need to analyze whether the current 'Action' is reasonable based on the intersection occupancy rate, and finally output your decision.
             There are the actions that will occur and their corresponding phases：
         

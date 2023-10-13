@@ -108,12 +108,13 @@ class TSCEnvWrapper(gym.Wrapper):
             total_waiting_time += veh_info['waiting_time']
             n+=1
         return -(total_waiting_time/n)
-    
+    ''''''
     def info_wrapper(self, infos, states):
         """在 info 中加入每个 phase 的占有率
         """
         #movement_occ = {key: value for key, value in zip(self.movement_ids, occupancy)}
         phase_occ = {}
+        phase_movement_occ={}
         movement_ids=states['tls'][self.tls_id]['movement_ids']
         for phase_index, phase_movements in self.phase2movements.items():
             #print('phase_index', phase_index)
@@ -125,9 +126,12 @@ class TSCEnvWrapper(gym.Wrapper):
                 phase_movement=phase_movement.replace('--','_')
                 index=movement_ids.index(phase_movement)
                 sum_temp+=states['tls'][self.tls_id]['last_step_occupancy'][index]
+                phase_movement_occ[states['tls'][self.tls_id]['movement_ids'][index]]=str(states['tls'][self.tls_id]['last_step_occupancy'][index])+'%'
             phase_occ[phase_index] = sum_temp
         
         infos['phase_occ'] = phase_occ
+        infos['movement_occ']= phase_movement_occ
+        infos['phase2movements']= states['tls'][self.tls_id]['phase2movements']
         #print('infos',infos)
         return infos
 
@@ -158,6 +162,10 @@ class TSCEnvWrapper(gym.Wrapper):
         states, rewards, truncated, dones, infos = super().step(action) # 与环境交互
         # 处理 obs
         #_observations = observations[self.tls_id]
+        #print('movement_ids',states['tls'][self.tls_id]['movement_ids'])#信号灯id
+        #print('phase2movements',states['tls'][self.tls_id]['phase2movements'])#phase2movement
+        #print('last_step_occupancy',states['tls'][self.tls_id]['last_step_occupancy'])
+        #print('this_phase',states['tls'][self.tls_id]['this_phase'])
         observation = self._process_obs(state=states)
         process_reward = self.reward_wrapper(states=states)
         #occupancy, can_perform_action = self.state_wrapper(state=states) # 处理每一帧的数据

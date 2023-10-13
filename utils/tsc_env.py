@@ -31,9 +31,10 @@ class TSCEnvironment(gym.Env):
         
     def step(self, action:Dict[str, Dict[str, int]]):
         action = {'tls': action} # 这里只控制 tls 即可
+
         states, rewards, infos, dones = self.tsc_env.step(action)
         truncated = dones
-
+        
         return states, rewards, truncated, dones, infos
     
     def close(self) -> None:

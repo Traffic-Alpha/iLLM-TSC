@@ -20,9 +20,9 @@ if __name__ == '__main__':
     # #########
     # Init Env
     # #########
-    sumo_cfg = path_convert("./TSCScenario/J1/env/J1.sumocfg")
+    sumo_cfg = path_convert("./TSCScenario/SumoNets/train_four_345/env/train_four_345.sumocfg")
     params = {
-        'tls_id':'J4',
+        'tls_id':'J1',
         'num_seconds': 1600,
         'sumo_cfg':sumo_cfg,
         'use_gui':True,

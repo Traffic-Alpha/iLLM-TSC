@@ -43,7 +43,7 @@ if __name__ == '__main__':
     sumo_cfg = path_convert("./TSCScenario/SumoNets/train_four_345/env/train_four_345.sumocfg")
     params = {
         'tls_id':'J1',
-        'num_seconds':2600,
+        'num_seconds':3600,
         'sumo_cfg':sumo_cfg,
         'use_gui':False,
         'log_file':log_path,
@@ -78,13 +78,13 @@ if __name__ == '__main__':
                 env, 
                 #batch_size=64,
                 n_steps=5000, n_epochs=10, # 每次间隔 n_epoch 去评估一次
-                learning_rate=linear_schedule(3e-4),
+                learning_rate=linear_schedule(5e-4),
                 verbose=True, 
                 policy_kwargs=policy_kwargs, 
                 tensorboard_log=tensorboard_path, 
                 device=device
             )
-    model.learn(total_timesteps=5e6, tb_log_name='J1', callback=callback_list)
+    model.learn(total_timesteps=1e7, tb_log_name='J1', callback=callback_list)
     
     # #################
     # 保存 model 和 env
