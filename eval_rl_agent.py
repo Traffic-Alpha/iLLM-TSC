@@ -1,8 +1,5 @@
 '''
-@Author: WANG Maonan
-@Date: 2023-09-08 18:57:35
 @Description: 使用训练好的 RL Agent 进行测试
-@LastEditTime: 2023-09-14 14:08:03
 '''
 import torch
 from loguru import logger

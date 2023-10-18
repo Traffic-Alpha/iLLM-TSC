@@ -1,8 +1,5 @@
 '''
-@Author: WANG Maonan
-@Date: 2023-09-08 18:57:35
-@Description: 使用训练好的 RL Agent 进行测试
-@LastEditTime: 2023-09-14 14:08:03
+@Description: RL 与 LLM 协同控制框架使用， 需要预先训练好RL模型。
 '''
 import torch
 import langchain
@@ -17,7 +14,6 @@ from tshub.utils.init_log import set_logger
 from TSCEnvironment.tsc_env import TSCEnvironment
 from TSCEnvironment.tsc_env_wrapper import TSCEnvWrapper
 from TSCAgent.tsc_agent import TSCAgent
-from TSCAgent.custom_tools import GetAvailableActions, GetCurrentOccupancy
 
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import VecNormalize, SubprocVecEnv

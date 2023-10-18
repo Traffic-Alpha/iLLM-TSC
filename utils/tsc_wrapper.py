@@ -115,6 +115,7 @@ class TSCEnvWrapper(gym.Wrapper):
         #movement_occ = {key: value for key, value in zip(self.movement_ids, occupancy)}
         phase_occ = {}
         phase_movement_occ={}
+        phase_vehicles_num={}
         movement_ids=states['tls'][self.tls_id]['movement_ids']
         for phase_index, phase_movements in self.phase2movements.items():
             #print('phase_index', phase_index)
@@ -127,11 +128,14 @@ class TSCEnvWrapper(gym.Wrapper):
                 index=movement_ids.index(phase_movement)
                 sum_temp+=states['tls'][self.tls_id]['last_step_occupancy'][index]
                 phase_movement_occ[states['tls'][self.tls_id]['movement_ids'][index]]=str(states['tls'][self.tls_id]['last_step_occupancy'][index])+'%'
+                phase_vehicles_num[states['tls'][self.tls_id]['movement_ids'][index]]=int(states['tls'][self.tls_id]['jam_length_meters'][index])
             phase_occ[phase_index] = sum_temp
-        
         infos['phase_occ'] = phase_occ
         infos['movement_occ']= phase_movement_occ
         infos['phase2movements']= states['tls'][self.tls_id]['phase2movements']
+        infos['jam_length_meters']= phase_vehicles_num
+        infos['last_step_vehicle_id_list']=states['tls'][self.tls_id]['last_step_vehicle_id_list']
+        infos['movement_ids']=states['tls'][self.tls_id]['movement_ids']
         #print('infos',infos)
         return infos
 
@@ -157,23 +161,21 @@ class TSCEnvWrapper(gym.Wrapper):
        
         """将 step 的结果提取, 从 dict 提取为 list
         """
-        action = {self.tls_id: action} # 构建单路口 action 的动作 
+        can_perform_action = False
+        while not can_perform_action:
+            action = {self.tls_id: action} # 构建单路口 action 的动作
+            states, rewards, truncated, dones, infos = super().step(action) # 与环境交互
+            ccupancy, can_perform_action = self.state_wrapper(state=states) # 处理每一帧的数据
         
-        states, rewards, truncated, dones, infos = super().step(action) # 与环境交互
+        #action = {self.tls_id: action} # 构建单路口 action 的动作 
+        
+        #states, rewards, truncated, dones, infos = super().step(action) # 与环境交互
         # 处理 obs
         #_observations = observations[self.tls_id]
-        #print('movement_ids',states['tls'][self.tls_id]['movement_ids'])#信号灯id
-        #print('phase2movements',states['tls'][self.tls_id]['phase2movements'])#phase2movement
-        #print('last_step_occupancy',states['tls'][self.tls_id]['last_step_occupancy'])
-        #print('this_phase',states['tls'][self.tls_id]['this_phase'])
         observation = self._process_obs(state=states)
         process_reward = self.reward_wrapper(states=states)
         #occupancy, can_perform_action = self.state_wrapper(state=states) # 处理每一帧的数据
         infos = self.info_wrapper(infos, states=states)
-        #self.occupancy.add_element(occupancy)
-        #print('observation',observation)
-        #print('infos',infos)
-        #print('rewards',process_reward)
         return observation, process_reward, truncated, dones, infos
     
 

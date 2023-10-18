@@ -1,8 +1,5 @@
 '''
-@Author: WANG Maonan
-@Date: 2023-09-08 15:57:34
-@Description: 测试 TSC Env 环境
-@LastEditTime: 2023-09-13 16:33:41
+@Description: 基于规则空的TSC模型, 选择等待车辆最多的路口通行
 '''
 import numpy as np
 from loguru import logger

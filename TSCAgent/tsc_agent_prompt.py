@@ -30,13 +30,15 @@ Please make decision for the traffic light. Let's think step by step.
 """
 
 TRAFFIC_RULES = """
+1. 
 """
 
 DECISION_CAUTIONS = """
 1. DONOT finish the task until you have a final answer. You must output a decision when you finish this task. Your final output decision must be unique and not ambiguous. For example you cannot say "I don’t know if this **Action** is reasonable or not".
-2. You can only use tools mentioned before to help you make decision. DONOT fabricate any other tool name not mentioned.
-3. Remember what tools you have used, DONOT use the same tool repeatedly.
-4. You need to know your available actions and junction state before you make any decision.
+2. The higher the average occupancy rate of a movement, the more cars are waiting in this lane. You can reduce the congestion of this movement by selecting this movement.
+3. You need to know your available actions and junction state before you make any decision.
+4. If RL’s decision is reasonable or your decision and RL’s decision are the same, Please indicate ‘reasonable’ in ‘decision’.
+5. Emergency vehicles have priority through intersections.
 """
 
 
