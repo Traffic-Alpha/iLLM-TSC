@@ -5,6 +5,7 @@ We propose a framework that utilizes LLM to support RL models. This framework re
 
 <div align=center>
 <img width="90%" src="./images/RL_LLM_Framework.png" />
+
 The detailed structure of HARLA.
 </div>
 
