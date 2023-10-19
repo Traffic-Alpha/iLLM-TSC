@@ -22,8 +22,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.output_parsers import ResponseSchema
 from langchain.output_parsers import StructuredOutputParser
 
-from TSCAgent.tsc_agent_prompt import SYSTEM_MESSAGE_SUFFIX
-from TSCAgent.tsc_agent_prompt import (
+from TSCAssistant.tsc_agent_prompt import SYSTEM_MESSAGE_SUFFIX
+from TSCAssistant.tsc_agent_prompt import (
     SYSTEM_MESSAGE_SUFFIX,
     SYSTEM_MESSAGE_PREFIX,
     HUMAN_MESSAGE,

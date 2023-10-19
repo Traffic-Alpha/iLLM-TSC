@@ -1,5 +1,8 @@
 '''
-@Description: RL 与 LLM 协同控制框架使用， 需要预先训练好RL模型。
+@Author: WANG Maonan
+@Date: 2023-09-08 18:57:35
+@Description: 使用训练好的 RL Agent 进行测试
+@LastEditTime: 2023-09-14 14:08:03
 '''
 import torch
 import langchain
@@ -13,7 +16,8 @@ from tshub.utils.init_log import set_logger
 
 from TSCEnvironment.tsc_env import TSCEnvironment
 from TSCEnvironment.tsc_env_wrapper import TSCEnvWrapper
-from TSCAgent.tsc_agent import TSCAgent
+from TSCAssistant.tsc_assistant import TSCAgent
+
 
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import VecNormalize, SubprocVecEnv
@@ -36,15 +40,7 @@ if __name__ == '__main__':
         openai_api_key=openai_api_key, 
         openai_proxy=openai_proxy
     )
-    '''
-    tsc_scenario = TSCEnvironment(
-        sumo_cfg=sumo_cfg, 
-        num_seconds=1200,
-        tls_id='J4', 
-        tls_action_type='choose_next_phase',
-        use_gui=True
-    )
-    '''
+
     #tsc_wrapper = TSCEnvWrapper(tsc_scenario)
 
     # #########
@@ -52,7 +48,7 @@ if __name__ == '__main__':
     # #########
     params = {
         'tls_id':'J1',
-        'num_seconds':2600,
+        'num_seconds':300,
         'sumo_cfg':sumo_cfg,
         'use_gui':True,
         'log_file':'./log_test/',
@@ -64,10 +60,10 @@ if __name__ == '__main__':
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model_path = path_convert('./models/last_rl_model.zip')
+
     model = PPO.load(model_path, env=env, device=device)
 
 
-    
     # 使用模型进行测试
     dones = False # 默认是 False
     sim_step = 0
@@ -77,11 +73,9 @@ if __name__ == '__main__':
     while not dones:
 
         action, _state = model.predict(obs, deterministic=True)
-        #print('action',action)
+        if sim_step>4:
+            action=tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs, infos=infos), 
         obs, rewards, dones, infos = env.step(action)
-        #print('infos',infos[0]['movement_occ'])
-        if sim_step>20:
-            tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs, infos=infos), 
         sim_step+=1
 
     env.close()

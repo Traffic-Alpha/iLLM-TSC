@@ -20,7 +20,7 @@ from benchmark.traffic_light.single_agent.utils.custom_models import CustomModel
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 from stable_baselines3.common.callbacks import CallbackList, CheckpointCallback
-from model import scnn
+from utils import scnn
 
 path_convert = get_abs_path(__file__)
 logger.remove()
