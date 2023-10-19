@@ -1,4 +1,5 @@
+#填入自己的配置文件
 OPENAI API BASE: "https://api.openai.com/v1"
-OPENAI_PROXY: "http://127.0.0.1:7890"
-OPENAI_API_KEY: "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"
+OPENAI_PROXY: 
+OPENAI_API_KEY: 
 OPENAI_API_MODEL: "gpt-4"
