@@ -1,4 +1,12 @@
-# Human-like Assessment of RL Actions: LLM's Role in TSC Optimization
+# Human-like Assessment of RL Actions: Leveraging Large Language Models for RL Actions in Traffic Signal Control Systems
+
+## HARLA's powerful capabilities
+
+<div align=center>
+<video width="90%" controls>
+    <source src="./images/Case3.mp4" type="video/mp4">
+</video>
+</div>
 
 ## Info
 We propose a framework that utilizes LLM to support RL models. This framework refines RL decisions based on real-world contexts and provides reasonable actions when RL agents make erroneous decisions. 
@@ -8,6 +16,7 @@ We propose a framework that utilizes LLM to support RL models. This framework re
 
 The detailed structure of HARLA.
 </div>
+
 
 ## Typical Cases
 
@@ -45,6 +54,10 @@ python sb3_ppo.py
 
 ```bash
 python rl_llm_tsc.py
+
 ```
+### Simulation 
+
+Simulation is based on [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub)
 
 **Evaluation Rule: To make fair evaluation and comparison among different models, make sure you use the same LLM evaluation model (we use GPT4) for all the models you want to evaluate. Using a different scoring model or API updating might lead to different results.**
