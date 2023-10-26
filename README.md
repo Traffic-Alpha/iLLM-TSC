@@ -64,6 +64,7 @@ pip install -r requirements.txt
 
 ```bash
 cd TSC-HARLA
+pip install -r requirements.txt
 python sb3_ppo.py
 ```
 - The training results are shown in the figure
@@ -78,7 +79,7 @@ RL model can be checked:
 python eval_rl_agent.py
 ```
 ### Try RL+LLM
-- add you own KEY at 'utils/config.yaml'
+- Add you own KEY at 'utils/config.yaml'
 ```bash
 OPENAI_PROXY: 
 OPENAI_API_KEY:
