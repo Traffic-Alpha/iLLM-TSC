@@ -64,7 +64,6 @@ pip install -r requirements.txt
 
 ```bash
 cd TSC-HARLA
-pip install -r requirements.txt
 python sb3_ppo.py
 ```
 - The training results are shown in the figure
