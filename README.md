@@ -33,15 +33,14 @@ The detailed structure of HARLA.
 <img width="90%" src="./assets/Case3.png" />
 </div>
 
-
-## Run HARLA locally
+## Install
 
 ### Install [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub)
 TransSimHub is used for simulation of the environment, can learn more about from [docs](https://transsimhub.readthedocs.io/en/latest/)
 
 ```bash
 git clone https://github.com/Traffic-Alpha/TransSimHub.git
-cd TransSimHub.git
+cd TransSimHub
 pip install -e .
 ```
 
@@ -52,21 +51,42 @@ import tshub
 print(tshub.__version__)
 ```
 
-### Get HARLA
+###  Install HARLA
+
 ```bash
 git clone https://github.com/Traffic-Alpha/TSC-HARLA
 cd TSC-HARLA
+pip install -r requirements.txt
 ```
+## Run HARLA locally
 
-### RL Model Training
+### Train RL
 
 ```bash
+cd TSC-HARLA
 python sb3_ppo.py
 ```
-### Try RL+LLM
+- The training results are shown in the figure
 
+<div align=center>
+<img width="90%" src="./assets/train_result.png" />
+</div>
+- Weight has been uploaded in 'models'
+
+RL model can be checked:
+```bash
+python eval_rl_agent.py
+```
+### Try RL+LLM
+- add you own KEY at 'utils/config.yaml'
+```bash
+OPENAI_PROXY: 
+OPENAI_API_KEY:
+```
+- Then can try HARLA
 ```bash
 python rl_llm_tsc.py
 ```
+
 
 **Evaluation Rule: To make fair evaluation and comparison among different models, make sure you use the same LLM evaluation model (we use GPT4) for all the models you want to evaluate. Using a different scoring model or API updating might lead to different results.**
