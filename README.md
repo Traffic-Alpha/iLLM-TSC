@@ -2,12 +2,7 @@
 
 ## HARLA's powerful capabilities
 
-
-<div align=center>
-<video width="90%" controls>
-    <source src="./assets/Case3.mp4" type="video/mp4">
-</video>
-</div>
+https://github.com/Traffic-Alpha/TSC-HARLA/assets/75999557/db981004-bd33-41e7-8865-396af1ef0cd9
 
 ## Info
 We propose a framework that utilizes LLM to support RL models. This framework refines RL decisions based on real-world contexts and provides reasonable actions when RL agents make erroneous decisions. 
