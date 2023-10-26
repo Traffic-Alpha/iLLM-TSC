@@ -36,15 +36,16 @@ The detailed structure of HARLA.
 ## Install
 
 ### Install [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub)
-The simulation environment used is TransSimHub, which is based on SUMO and can be used for TSC, V2X and UAM simulation. More information is available via [docs](https://transsimhub.readthedocs.io/en/latest/).
+The simulation environment we used is TransSimHub, which is based on SUMO and can be used for TSC, V2X and UAM simulation. More information is available via [docs](https://transsimhub.readthedocs.io/en/latest/).
 
+You can install TransSimHub by cloning the GitHub repository. Follow these steps:
 ```bash
 git clone https://github.com/Traffic-Alpha/TransSimHub.git
 cd TransSimHub
 pip install -e .
 ```
 
-The installation of TransSimHub can be checked by the code. 
+After the installation is complete, you can use the following Python command to check if TransSimHub is installed and view its version:
 
 ```bash
 import tshub
@@ -52,37 +53,37 @@ print(tshub.__version__)
 ```
 
 ###  Install HARLA
-
+You can install HARLA by cloning the GitHub repository. Follow these steps:
 ```bash
 git clone https://github.com/Traffic-Alpha/TSC-HARLA
 cd TSC-HARLA
 pip install -r requirements.txt
 ```
+After completing the above ``Install steps``, you can use this program locally. 
 ## Run HARLA locally
-
 ### Train RL
-
+The first thing you need to do is train a RL model. You can do it with the following code:
 ```bash
 cd TSC-HARLA
 python sb3_ppo.py
 ```
-The training results are shown in the figure, and weight has been uploaded in 'models'. 
+The training results are shown in the figure, and model weight has been uploaded in [models](./models/). 
 
 <div align=center>
-<img width="90%" src="./assets/train_result.png" />
+<img width="70%" src="./assets/train_result.png" />
 </div>
 
-The RL model training results can be checked by the following code.
+The effect of the RL model can be tested with the following code:
 ```bash
 python eval_rl_agent.py
 ```
 ### Try RL+LLM
-With the RL model trained (or with the provided weights), you can use LLM to test the entire framework. Before you can use it, you need to have your own KEY and fill it in the 'utils/config.yaml'. 
+Before you can use LLM, you need to have your own KEY and fill it in the [``utils/config.yaml``](./utils/config.yaml). 
 ```bash
 OPENAI_PROXY: 
 OPENAI_API_KEY:
 ```
-The entire framework can be run with the following code.
+The entire framework can be ues with the following code.
 ```bash
 python rl_llm_tsc.py
 ```
