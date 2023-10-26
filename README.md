@@ -36,7 +36,7 @@ The detailed structure of HARLA.
 ## Install
 
 ### Install [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub)
-TransSimHub is used for simulation of the environment, can learn more about from [docs](https://transsimhub.readthedocs.io/en/latest/)
+The simulation environment used is TransSimHub, which is based on SUMO and can be used for TSC, V2X and UAM simulation. More information is available via [docs](https://transsimhub.readthedocs.io/en/latest/).
 
 ```bash
 git clone https://github.com/Traffic-Alpha/TransSimHub.git
@@ -44,7 +44,7 @@ cd TransSimHub
 pip install -e .
 ```
 
-TransSimHub installation can be checked:
+The installation of TransSimHub can be checked by the code. 
 
 ```bash
 import tshub
@@ -66,24 +66,23 @@ pip install -r requirements.txt
 cd TSC-HARLA
 python sb3_ppo.py
 ```
-- The training results are shown in the figure
+The training results are shown in the figure, and weight has been uploaded in 'models'. 
 
 <div align=center>
 <img width="90%" src="./assets/train_result.png" />
 </div>
-- Weight has been uploaded in 'models'
 
-RL model can be checked:
+The RL model training results can be checked by the following code.
 ```bash
 python eval_rl_agent.py
 ```
 ### Try RL+LLM
-- Add you own KEY at 'utils/config.yaml'
+With the RL model trained (or with the provided weights), you can use LLM to test the entire framework. Before you can use it, you need to have your own KEY and fill it in the 'utils/config.yaml'. 
 ```bash
 OPENAI_PROXY: 
 OPENAI_API_KEY:
 ```
-- Then can try HARLA
+The entire framework can be run with the following code.
 ```bash
 python rl_llm_tsc.py
 ```
