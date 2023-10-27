@@ -1,16 +1,8 @@
 '''
 @Author: WANG Maonan
+@Author: PangAoyu
 @Date: 2023-09-05 11:27:05
-@Description: 处理 Traffic Signal Control Env 的 State
-1. 处理路口的信息
-    - 路口的静态信息, 道路拓扑信息 (这个是用于相似度的比较)
-    - 道路的动态信息, 会随着时间进行变化（每个 phase 的排队长度和当前所在的 phase）
-2. 实现一些查询的接口
-    - （a）所有可能的动作, 这里就是 `change phase 0 green` or `change phase k green`, 切换到某个 phase 是绿灯
-    - （b）作出动作后，成为的新的 phase
-    - （c）作出某个动作后, phase 对应排队长度的变化的预测（这里预测可以直接使用 MCT 来进行预测，或者服从某个分布，这里需要做一个预测）
-    - （d）比较前后两次 phase 之间的排队的增加
-    - （e）分析路口的性能（就是根据 c 的结果做进一步的计算）
+@Description: 处理 Traffic Signal Control Env 的 State）
 @LastEditTime: 2023-09-15 20:30:41
 '''
 import gymnasium as gym
@@ -23,9 +15,6 @@ from TSCEnvironment.wrapper_utils import (
     predict_queue_length, 
     OccupancyList
 )
-
-
-    
     
 class TSCEnvWrapper(gym.Wrapper):
     def __init__(self, env: Env) -> None:
