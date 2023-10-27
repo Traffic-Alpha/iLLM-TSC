@@ -1,12 +1,11 @@
 '''
 @Author: WANG Maonan
+@Author: PangAoyu
 @Date: 2023-09-08 18:57:35
 @Description: 使用训练好的 RL Agent 进行测试
 @LastEditTime: 2023-09-14 14:08:03
 '''
 import torch
-import langchain
-import numpy as np
 from langchain.chat_models import ChatOpenAI
 
 from loguru import logger
@@ -40,8 +39,6 @@ if __name__ == '__main__':
         openai_api_key=openai_api_key, 
         openai_proxy=openai_proxy
     )
-
-    #tsc_wrapper = TSCEnvWrapper(tsc_scenario)
 
     # #########
     # Init Env

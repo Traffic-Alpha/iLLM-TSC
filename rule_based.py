@@ -1,4 +1,6 @@
 '''
+@Author: WANG Maonan
+@Author: PangAoyu
 @Description: 基于规则空的TSC模型, 选择等待车辆最多的路口通行
 '''
 import numpy as np
