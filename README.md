@@ -90,3 +90,23 @@ python rl_llm_tsc.py
 
 
 **Evaluation Rule: To make fair evaluation and comparison among different models, make sure you use the same LLM evaluation model (we use GPT4) for all the models you want to evaluate. Using a different scoring model or API updating might lead to different results.**
+
+## License and Citation
+All assets and code in this repository are under the [Apache 2.0 license](./LICENSE) unless specified otherwise. The language data is under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Other datasets (including nuScenes) inherit their own distribution licenses. Please consider citing our project if it helps your research.
+
+```BibTeX
+@misc{HARLA2023,
+  title={Human-like Assessment of RL Actions: Leveraging Large Language Models for RL Actions in Traffic Signal Control Systems},
+  author={Aoyu Pang, Maonan Wang},
+  howpublished={\url{https://github.com/Traffic-Alpha/TSC-HARLA}},
+  year={2023}
+}
+```
+
+## More Projects
+HARLA just explores the combination of RL and LLM, more work will be updated in [**TSC-LLM**](https://github.com/Traffic-Alpha/TSC-LLM), welcome to star!
+
+## Acknowledgment
+
+- **Yufei Teng**: Thanks for editing the video.
+- **Thank you to everyone who pays attention to our work. Hope our work can help you.**

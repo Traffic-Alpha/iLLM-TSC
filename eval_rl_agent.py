@@ -1,5 +1,6 @@
 '''
-@Author: Pang Aoyu
+@Author: WANG Maonan
+@Author: PangAoyu
 @Description: 使用训练好的 RL Agent 进行测试
 '''
 import torch
@@ -48,4 +49,4 @@ if __name__ == '__main__':
         total_reward += rewards
         
     env.close()
-    print(f'累积奖励为, {total_reward}.')
+    print(f'Reward, {total_reward}.')

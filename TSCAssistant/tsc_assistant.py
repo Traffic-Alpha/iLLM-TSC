@@ -9,13 +9,9 @@ from typing import List
 from loguru import logger
 
 from langchain.chat_models import ChatOpenAI
-from langchain.agents import initialize_agent, AgentType
-from langchain.agents.tools import Tool
 from langchain.memory import ConversationTokenBufferMemory
 from langchain.chains import ConversationChain
 from langchain.prompts import ChatPromptTemplate   #导入聊天提示模板
-from langchain.chains import SimpleSequentialChain
-from langchain.chains import SequentialChain
 from langchain.chains import LLMChain    #导入LLM链。
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
