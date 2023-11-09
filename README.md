@@ -97,7 +97,7 @@ All assets and code in this repository are under the [Apache 2.0 license](./LICE
 ```BibTeX
 @misc{HARLA2023,
   title={Human-like Assessment of RL Actions: Leveraging Large Language Models for RL Actions in Traffic Signal Control Systems},
-  author={Aoyu Pang, Maonan Wang},
+  author={Aoyu Pang, Maonan Wan, Man-On~Pun and Chung Shue Chen},
   publisher = {GitHub},
   journal = {GitHub repository},
   howpublished={\url{https://github.com/Traffic-Alpha/TSC-HARLA}},
