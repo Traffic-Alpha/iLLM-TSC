@@ -8,7 +8,7 @@ import numpy as np
 from typing import List
 from loguru import logger
 
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.memory import ConversationTokenBufferMemory
 from langchain.chains import ConversationChain
 from langchain.prompts import ChatPromptTemplate   #导入聊天提示模板

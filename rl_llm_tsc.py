@@ -6,7 +6,7 @@
 @LastEditTime: 2023-09-14 14:08:03
 '''
 import torch
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 
 from loguru import logger
 from tshub.utils.format_dict import dict_to_str

@@ -1,4 +1,4 @@
-# Human-like Assessment of RL Actions: Leveraging Large Language Models for RL Actions in Traffic Signal Control Systems
+# HARLA: Robust Traffic Signal Control Using Hybrid Augmented Reinforcement Learning and LLM Assistant
 
 ## HARLA's powerful capabilities
 
