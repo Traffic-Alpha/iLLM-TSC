@@ -83,7 +83,7 @@ Before you can use LLM, you need to have your own KEY and fill it in the [``util
 OPENAI_PROXY: 
 OPENAI_API_KEY:
 ```
-The entire framework can be ues with the following code.
+The entire framework can be used with the following code.
 ```bash
 python rl_llm_tsc.py
 ```
