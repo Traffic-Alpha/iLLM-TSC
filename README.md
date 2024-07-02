@@ -1,5 +1,4 @@
-# HARLA: Robust Traffic Signal Control Using Hybrid Augmented Reinforcement Learning and LLM Assistant
-
+# iLLM-TSC: Integration reinforcement learning and large language model for traffic signal control policy improvement
 ## HARLA's powerful capabilities
 
 https://github.com/Traffic-Alpha/TSC-HARLA/assets/75999557/92d6ff7f-cc5b-42ba-9feb-046022e70ad9
