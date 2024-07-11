@@ -3,7 +3,7 @@
 @Author: PangAoyu
 @Date: 2023-09-08 18:57:35
 @Description: 使用训练好的 RL Agent 进行测试
-@LastEditTime: 2023-09-14 14:08:03
+LastEditTime: 2024-07-11 13:34:07
 '''
 import torch
 from langchain_openai import ChatOpenAI
@@ -25,7 +25,7 @@ from utils.readConfig import read_config
 from utils.make_tsc_env import make_env
 
 path_convert = get_abs_path(__file__)
-logger.remove()
+set_logger(path_convert('./'))
 
 if __name__ == '__main__':
     sumo_cfg = path_convert("./TSCScenario/SumoNets/train_four_345/env/train_four_345.sumocfg")
@@ -43,12 +43,14 @@ if __name__ == '__main__':
     # #########
     # Init Env
     # #########
+    trip_info = path_convert(f'./Result/LLM.tripinfo.xml')
     params = {
         'tls_id':'J1',
         'num_seconds':300,
         'sumo_cfg':sumo_cfg,
         'use_gui':True,
         'log_file':'./log_test/',
+        'trip_info':trip_info,
     }
     env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(1)])#获取env信息
     env = VecNormalize.load(load_path=path_convert('./models/last_vec_normalize.pkl'), venv=env)
@@ -71,8 +73,8 @@ if __name__ == '__main__':
 
         action, _state = model.predict(obs, deterministic=True)
         if sim_step>4:
-            action=tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs, infos=infos), 
+            action=tsc_agent.agent_run(sim_step=sim_step, action=action, obs=obs, infos=infos), #加入 obs wrapper
         obs, rewards, dones, infos = env.step(action)
-        sim_step+=1
-
+        sim_step += 1
+    print('***********rewards************',rewards)
     env.close()

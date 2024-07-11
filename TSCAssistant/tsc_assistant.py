@@ -2,18 +2,18 @@
 @Author: Pang Aoyu
 @Date: 2023-09-04 20:51:49
 @Description: traffic light control LLM Agent
-@LastEditTime: 2023-09-15 20:53:32
+LastEditTime: 2024-07-11 13:36:19
 '''
 import numpy as np
 from typing import List
 from loguru import logger
 
-from langchain_openai import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.memory import ConversationTokenBufferMemory
-from langchain.chains import ConversationChain
+from  langchain.chains.conversation.base import ConversationChain
 from langchain.prompts import ChatPromptTemplate   #导入聊天提示模板
-from langchain.chains import LLMChain    #导入LLM链。
-from langchain.chains import ConversationChain
+from langchain.chains.llm import LLMChain   #导入LLM链。
+
 from langchain.memory import ConversationBufferMemory
 from langchain.output_parsers import ResponseSchema
 from langchain.output_parsers import StructuredOutputParser
@@ -106,16 +106,18 @@ class TSCAgent:
         3. 判断动作是否可行
         """
         logger.info(f"SIM: Decision at step {sim_step} is running:")
-        occupancy=self.get_occupancy(obs)
-        Action=action[0]
-        step_time=infos[0]['step_time']
+        occupancy = self.get_occupancy(obs)
+        Action = action[0]
+        step_time = infos[0]['step_time']
         step_time=int(step_time)
         Occupancy=infos[0]['movement_occ']
         jam_length_meters=infos[0]['jam_length_meters']
         movement_ids=infos[0]['movement_ids']
         last_step_vehicle_id_list=infos[0]['last_step_vehicle_id_list']
+        information_missing = infos[0]['information_missing']
+        missing_id = infos[0]['missing_id']
         rescue_movement_ids=self.get_rescue_movement_ids(last_step_vehicle_id_list,movement_ids)
-        print('rescue_movement_ids',rescue_movement_ids)
+        # 要进行处理 如个存在缺失数值
         review_template="""
         decision:  Traffic light decision-making judgment  whether the Action is reasonable in the current state.
         explanations: Your explanation about your decision, described your suggestions to the Crossing Guard. The analysis should be as detailed as possible, including the possible benefits of each action.
@@ -152,7 +154,10 @@ class TSCAgent:
             The number of cars waiting in each movement is：`{jam_length_meters}`. 
             Now these movements exist emergency vehicles： `{rescue_movement_ids}`. 
             Phase to Movement: '{self.phase2movements}'
-            Please make decision for the traffic signal light.You have to work with the **Static State** and **Action** of the 'traffic light'. Then you need to analyze whether the current 'Action' is reasonable based on the intersection occupancy rate, and finally output your decision.
+            Is there a information loss now： '{information_missing}'
+            The loss ID is：'{missing_id}'
+            Please make decision for the traffic signal light.You have to work with the **Static State** and **Action** of the 'traffic light'. 
+            Then you need to analyze whether the current 'Action' is reasonable based on the intersection occupancy rate, and finally output your decision.
             There are the actions that will occur and their corresponding phases：
         
                 - Action 0： Phase 0
@@ -168,10 +173,13 @@ class TSCAgent:
             """)
         messages = prompt.format_messages(observation=observation, format_instructions=format_instructions)
         print(messages[0].content)
+        logger.info('RL:'+messages[0].content) #加入RL解析 输入到日志文件
         r = self.llm(messages)
         output_dict = output_parser.parse(r.content)
         print(r.content)
+        logger.info('RL:'+r.content)
         final_action=output_dict.get('final_action')
+        logger.info('RL:'+final_action)
         print('-'*10)
         final_action=int(final_action)
         return final_action
