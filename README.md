@@ -93,6 +93,14 @@ python rl_llm_tsc.py
 ## License and Citation
 All assets and code in this repository are under the [Apache 2.0 license](./LICENSE) unless specified otherwise. The language data is under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Other datasets (including nuScenes) inherit their own distribution licenses. Please consider citing our project if it helps your research.
 ```BibTeX
+@article{pang2024illm,
+  title={iLLM-TSC: Integration reinforcement learning and large language model for traffic signal control policy improvement},
+  author={Pang, Aoyu and Wang, Maonan and Pun, Man-On and Chen, Chung Shue and Xiong, Xi},
+  journal={arXiv preprint arXiv:2407.06025},
+  year={2024}
+}
+```
+```BibTeX
 @article{wang2024llm,
   title={LLM-Assisted Light: Leveraging Large Language Model Capabilities for Human-Mimetic Traffic Signal Control in Complex Urban Environments},
   author={Wang, Maonan and Pang, Aoyu and Kan, Yuheng and Pun, Man-On and Chen, Chung Shue and Huang, Bo},
