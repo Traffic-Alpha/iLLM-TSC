@@ -108,19 +108,10 @@ All assets and code in this repository are under the [Apache 2.0 license](./LICE
   year={2024}
 }
 ```
-```BibTeX
-@misc{HARLA2023,
-  title={Human-like Assessment of RL Actions: Leveraging Large Language Models for RL Actions in Traffic Signal Control Systems},
-  author={Aoyu Pang, Maonan Wan, Man-On~Pun and Chung Shue Chen},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished={\url{https://github.com/Traffic-Alpha/TSC-HARLA}},
-  year={2023}
-}
-```
+
 
 ## More Projects
-HARLA just explores the combination of RL and LLM, more work will be updated in [**TSC-LLM**](https://github.com/Traffic-Alpha/TSC-LLM), welcome to star!
+iLLM-TSC just explores the combination of RL and LLM, more work will be updated in [**TSC-LLM**](https://github.com/Traffic-Alpha/TSC-LLM), welcome to star!
 
 ## Acknowledgment
 
