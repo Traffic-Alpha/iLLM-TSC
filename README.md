@@ -3,6 +3,12 @@
 
 https://github.com/Traffic-Alpha/TSC-HARLA/assets/75999557/92d6ff7f-cc5b-42ba-9feb-046022e70ad9
 
+
+## [Paper](https://arxiv.org/abs/2407.06025) | [Simulation](https://github.com/Traffic-Alpha/TransSimHub) |
+
+![Teaser](imgs/teaser.png "Teaser Fig")
+
+
 ## Info
 We propose a framework that utilizes LLM to support RL models. This framework refines RL decisions based on real-world contexts and provides reasonable actions when RL agents make erroneous decisions. 
 
