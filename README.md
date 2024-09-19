@@ -1,10 +1,11 @@
 # iLLM-TSC: Integration reinforcement learning and large language model for traffic signal control policy improvement
 ## iLLM-TSC's powerful capabilities
+## [Paper](https://arxiv.org/abs/2407.06025) | [Simulation](https://github.com/Traffic-Alpha/TransSimHub) |
 
 https://github.com/Traffic-Alpha/TSC-HARLA/assets/75999557/92d6ff7f-cc5b-42ba-9feb-046022e70ad9
 
 
-## [Paper](https://arxiv.org/abs/2407.06025) | [Simulation](https://github.com/Traffic-Alpha/TransSimHub) |
+
 
 ![Teaser](imgs/teaser.png "Teaser Fig")
 
