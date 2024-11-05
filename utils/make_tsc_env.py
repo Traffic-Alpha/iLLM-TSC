@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2023-09-08 17:45:54
 @Description: 创建 TSC Env + Wrapper
-@LastEditTime: 2023-09-08 18:25:42
+LastEditTime: 2024-11-05 16:33:33
 '''
 import gymnasium as gym
 from utils.tsc_env import TSCEnvironment
@@ -20,6 +20,7 @@ def make_env(
             tls_ids=[tls_id], 
             tls_action_type='choose_next_phase',
             use_gui=use_gui,
+            trip_info = './log/trip_info.xml',
         )
         tsc_wrapper = TSCEnvWrapper(tsc_scenario, tls_id=tls_id)
         return Monitor(tsc_wrapper, filename=f'{log_file}/{env_index}')

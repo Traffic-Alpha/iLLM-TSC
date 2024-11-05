@@ -6,7 +6,7 @@
 + State Design: Last step occupancy for each movement
 + Action Design: Choose Next Phase 
 + Reward Design: Total Waiting Time
-@LastEditTime: 2023-09-14 14:09:10
+LastEditTime: 2024-11-05 16:29:46
 '''
 import os
 import torch
@@ -16,7 +16,7 @@ from tshub.utils.init_log import set_logger
 
 from utils.make_tsc_env import make_env
 from utils.sb3_utils import VecNormalizeCallback, linear_schedule
-from benchmark.traffic_light.single_agent.utils.custom_models import CustomModel
+from utils.custom_models import CustomModel
 
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
@@ -25,7 +25,7 @@ from utils import scnn
 
 path_convert = get_abs_path(__file__)
 logger.remove()
-set_logger(path_convert('./'), log_level="INFO")
+set_logger(path_convert('./'), terminal_log_level="INFO")
 
 if __name__ == '__main__':
     log_path = path_convert('./log/')
@@ -85,7 +85,7 @@ if __name__ == '__main__':
                 tensorboard_log=tensorboard_path, 
                 device=device
             )
-    model.learn(total_timesteps=1e7, tb_log_name='J1', callback=callback_list)
+    model.learn(total_timesteps=3e5, tb_log_name='J1', callback=callback_list)
     
     # #################
     # 保存 model 和 env
