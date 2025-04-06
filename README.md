@@ -11,7 +11,7 @@ https://github.com/Traffic-Alpha/TSC-HARLA/assets/75999557/92d6ff7f-cc5b-42ba-9f
 We propose a framework that utilizes LLM to support RL models. This framework refines RL decisions based on real-world contexts and provides reasonable actions when RL agents make erroneous decisions. 
 
 <div align=center>
-<img width="90%" src="./assets/RL_LLM_Framework.png" />
+<img width="90%" src="./assets/iLLM-Framework.png" />
 
 The detailed structure of iLLM-TSC.
 </div>
