@@ -58,8 +58,8 @@ print(tshub.__version__)
 ###  Install HARLA
 You can install HARLA by cloning the GitHub repository. Follow these steps:
 ```bash
-git clone https://github.com/Traffic-Alpha/TSC-HARLA
-cd TSC-HARLA
+git clone https://github.com/Traffic-Alpha/iLLM-TSC
+cd iLLM-TSC
 pip install -r requirements.txt
 ```
 After completing the above ``Install steps``, you can use this program locally. 
@@ -67,7 +67,7 @@ After completing the above ``Install steps``, you can use this program locally.
 ### Train RL
 The first thing you need to do is train a RL model. You can do it with the following code:
 ```bash
-cd TSC-HARLA
+cd iLLM-TSC
 python sb3_ppo.py
 ```
 The training results are shown in the figure, and model weight has been uploaded in [models](./models/). 
